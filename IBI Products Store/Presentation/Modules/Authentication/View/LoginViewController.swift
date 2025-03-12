@@ -7,6 +7,7 @@
 
 import UIKit
 import LocalAuthentication
+import Lottie
 
 final class LoginViewController: UIViewController {
 
@@ -14,7 +15,10 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var userPasswordField: UITextField!
     @IBOutlet weak var biometricIcon: UIImageView!
     
+    @IBOutlet weak var lottieAnimation: UIView!
+    
     private let viewModel = LoginViewModel()
+    private var lottieAnimationView: LottieAnimationView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +26,19 @@ final class LoginViewController: UIViewController {
         biometricIcon.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBiometricAuthentication))
         biometricIcon.addGestureRecognizer(tapGesture)
+        
+        loadLottieAnimation()
+    }
+    
+    @objc func loadLottieAnimation() {
+        lottieAnimationView = LottieAnimationView(name: "login_animation")
+        lottieAnimationView?.frame = lottieAnimation.bounds
+        lottieAnimationView?.contentMode = .scaleAspectFit
+        lottieAnimationView?.loopMode = .loop
+        lottieAnimationView?.play()
+
+        // Add to the UIView
+        lottieAnimation.addSubview(lottieAnimationView!)
     }
     
     @IBAction func onLoginAction(_ sender: Any) {
