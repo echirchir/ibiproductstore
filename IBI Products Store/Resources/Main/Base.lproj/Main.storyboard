@@ -442,7 +442,10 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="agG-R1-9X9"/>
                     <connections>
                         <outlet property="appThemeSwitch" destination="sYh-hX-naE" id="WuV-Mb-qwj"/>
+                        <outlet property="darkModeLabel" destination="cez-2m-RJz" id="Za9-KT-9iT"/>
+                        <outlet property="languageLabel" destination="1SI-kB-KYa" id="9kd-Yg-jQn"/>
                         <outlet property="languageSegment" destination="Yib-Qm-ABe" id="Ppp-pr-HwI"/>
+                        <outlet property="logoutButton" destination="NHc-ma-qQk" id="ND6-TN-kCB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OgE-Tw-RKJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

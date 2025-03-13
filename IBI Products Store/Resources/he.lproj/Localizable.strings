@@ -5,7 +5,14 @@
 //  Created by Elisha Chirchir on 12/03/2025.
 //
 
-"login_screen_title" = "IBI Products Store";
-"products_screen_title" = "Products";
-"favorites_screen_title" = "Favorites";
-"settings_screen_title" = "Settings";
+"login_screen_title" = "חנות מוצרי IBI";
+"products_screen_title" = "מוצרים";
+"favorites_screen_title" = "מועדפים";
+"settings_screen_title" = "הגדרות";
+
+// settings screen
+"dark_mode" = "מצב כהה";
+"language" = "שפה";
+"logout" = "התנתקות";
+
+

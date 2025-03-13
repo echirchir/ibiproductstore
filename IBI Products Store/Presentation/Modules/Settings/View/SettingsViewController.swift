@@ -9,6 +9,9 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var darkModeLabel: UILabel!
+    @IBOutlet weak var languageLabel: UILabel!
+    @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var languageSegment: UISegmentedControl!
     @IBOutlet weak var appThemeSwitch: UISwitch!
     
@@ -17,6 +20,20 @@ class SettingsViewController: UIViewController {
         let selectedLanguage = UserDefaultsManager.shared.languageCode
         languageSegment.selectedSegmentIndex = (selectedLanguage == LanguageCode.english.rawValue) ? 0 : 1
         setAppTheme()
+        
+        updateUI()
+        
+        // Observe language change notification
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleLanguageChange),
+            name: Notification.Name("LanguageChanged"),
+            object: nil
+        )
+    }
+    
+    @objc private func handleLanguageChange() {
+        updateUI()
     }
     
     @IBAction func onLogoutUser(_ sender: Any) {
@@ -29,8 +46,12 @@ class SettingsViewController: UIViewController {
         } else {
             UserDefaultsManager.shared.languageCode = LanguageCode.hebrew.rawValue
         }
-        
-        // set app-wide language
+    }
+    
+    private func updateUI() {
+        darkModeLabel.text = "dark_mode".localized
+        languageLabel.text = "language".localized
+        logoutButton.titleLabel?.text = "logout".localized
     }
     
     @IBAction func onToggleDarkMode(_ sender: UISwitch) {

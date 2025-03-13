@@ -44,3 +44,7 @@ func navigateToNextScreen(from viewController: UIViewController, destination: UI
         window.rootViewController = destination
     }
 }
+
+func changeAppLanguage() {
+    
+}

@@ -9,3 +9,8 @@
 "products_screen_title" = "Products";
 "favorites_screen_title" = "Favorites";
 "settings_screen_title" = "Settings";
+
+// settings
+"dark_mode" = "Dark Mode";
+"language" = "Language";
+"logout" = "Logout";
