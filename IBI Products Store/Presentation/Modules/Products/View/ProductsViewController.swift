@@ -61,7 +61,6 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedProduct = viewModel.products[indexPath.row]
-        
         performSegue(withIdentifier: "showProductDetails", sender: selectedProduct)
     }
 
@@ -69,7 +68,8 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "showProductDetails" {
             if let detailVC = segue.destination as? ProductDetailsViewController,
                let selectedProduct = sender as? LocalProduct {
-                detailVC.product = selectedProduct
+                 detailVC.delegate = self
+                 detailVC.product = selectedProduct
             }
         }
     }
@@ -114,5 +114,12 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
+    }
+}
+
+extension ProductsViewController: DetailsViewControllerDelegate {
+    func didDeleteProduct(withId productId: Int) {
+        viewModel.products.removeAll { $0.id == productId }
+        productsUiTable.reloadData()
     }
 }

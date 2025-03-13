@@ -17,6 +17,8 @@ class ProductDetailsViewController: UIViewController {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     
+    weak var delegate: DetailsViewControllerDelegate?
+    
     var product: LocalProduct?
 
     override func viewDidLoad() {
@@ -39,7 +41,9 @@ class ProductDetailsViewController: UIViewController {
     }
     
     @IBAction func onDeleteProductAction(_ sender: Any) {
-        
+        CoreDataManager.shared.deleteProduct(withId: product?.id ?? 0)
+        delegate?.didDeleteProduct(withId: product?.id ?? 0)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func onEditProductAction(_ sender: Any) {
@@ -48,21 +52,16 @@ class ProductDetailsViewController: UIViewController {
     
     func toggleFavorite() {
         guard let product = product else { return }
-        
-        // Toggle isFavorited in Core Data and get the new state
         let newFavoriteState = CoreDataManager.shared.toggleFavorite(for: product.id)
-        
-        // Update the local product property
         self.product?.isFavorited = newFavoriteState
-        
-        // Optionally, update the UI to reflect the new state
         updateFavoriteButton(isFavorited: newFavoriteState)
     }
     
     private func updateFavoriteButton(isFavorited: Bool) {
-        favoriteProductImage.setImage(
-            isFavorited ? UIImage(systemName: "star.fill") : UIImage(systemName: "star"),
-            for: .normal
-        )
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold, scale: .default)
+        let starImage = isFavorited ? UIImage(systemName: "star.fill", withConfiguration: symbolConfig) : UIImage(systemName: "star", withConfiguration: symbolConfig)
+        
+        favoriteProductImage.image = starImage
+        favoriteProductImage.tintColor = isFavorited ? .systemYellow : .systemGray
     }
 }
