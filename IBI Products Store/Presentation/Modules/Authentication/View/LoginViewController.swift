@@ -17,6 +17,8 @@ final class LoginViewController: UIViewController {
     
     @IBOutlet weak var lottieAnimation: UIView!
     
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var loginTitle: UILabel!
     private let viewModel = LoginViewModel()
     private var lottieAnimationView: LottieAnimationView?
     
@@ -28,6 +30,20 @@ final class LoginViewController: UIViewController {
         biometricIcon.addGestureRecognizer(tapGesture)
         
         loadLottieAnimation()
+        
+        updateUI()
+        
+        // Observe language change notification
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleLanguageChange),
+            name: Notification.Name("LanguageChanged"),
+            object: nil
+        )
+    }
+    
+    @objc private func handleLanguageChange() {
+        updateUI()
     }
     
     @objc func loadLottieAnimation() {
@@ -44,8 +60,13 @@ final class LoginViewController: UIViewController {
         if viewModel.validateCredentials(username: userNameField.text ?? "", password: userPasswordField.text ?? "") {
             onSuccessfulAuthentication()
         } else {
-            showAlert(title: "Invalid Credentials", message: "Please enter the correct credentials to proceed!")
+            showAlert(title: "invalid_credentials".localized, message: "invalid_creds_details".localized)
         }
+    }
+    
+    private func updateUI() {
+        loginTitle.text = "login_screen_title".localized
+        loginButton.titleLabel?.text = "login_button_title".localized
     }
     
     @objc func onSuccessfulAuthentication() {
@@ -63,7 +84,7 @@ final class LoginViewController: UIViewController {
         
         // Check if biometric authentication is available for device
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Authenticate to log in"
+            let reason = "auth_to_proceed".localized
             
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 DispatchQueue.main.async {

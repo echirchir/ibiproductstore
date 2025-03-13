@@ -14,3 +14,15 @@
 "dark_mode" = "Dark Mode";
 "language" = "Language";
 "logout" = "Logout";
+
+// product
+"name" = "Name";
+"description" = "Description";
+"brand" = "Brand";
+"price" = "Price";
+
+// login
+"invalid_credentials" = "Invalid Credentials";
+"invalid_creds_details" = "Please enter the correct credentials to proceed!";
+"login_button_title" = "Login";
+"auth_to_proceed" = "Authenticate to access the app";

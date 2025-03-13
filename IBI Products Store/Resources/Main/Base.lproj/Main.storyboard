@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IBI Products Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEG-XE-WcP">
-                                <rect key="frame" x="122" y="92" width="147" height="20.333333333333343"/>
+                                <rect key="frame" x="122" y="92" width="147" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -29,7 +29,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" textContentType="username"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" background="Password" translatesAutoresizingMaskIntoConstraints="NO" id="6Ov-Fx-2t3">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" background="Password" translatesAutoresizingMaskIntoConstraints="NO" id="6Ov-Fx-2t3">
                                 <rect key="frame" x="57" y="338" width="279" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
@@ -92,6 +92,8 @@
                     </view>
                     <connections>
                         <outlet property="biometricIcon" destination="ohj-hF-6Vo" id="I8B-RI-3pU"/>
+                        <outlet property="loginButton" destination="0yU-HJ-sgK" id="5hn-Ik-GBA"/>
+                        <outlet property="loginTitle" destination="JEG-XE-WcP" id="98P-Zs-Pk6"/>
                         <outlet property="lottieAnimation" destination="syK-HM-eXg" id="NWR-lL-5SQ"/>
                         <outlet property="userNameField" destination="jOc-J2-dfb" id="SnD-QM-Ets"/>
                         <outlet property="userPasswordField" destination="6Ov-Fx-2t3" id="dIP-lL-ktc"/>

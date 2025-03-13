@@ -15,4 +15,14 @@
 "language" = "שפה";
 "logout" = "התנתקות";
 
+// product
+"name" = "שם";
+"description" = "תיאור";
+"brand" = "מותג";
+"price" = "מחיר";
 
+// login
+"invalid_credentials" = "אישורים לא חוקיים";
+"invalid_creds_details" = "אנא הזן אישורים נכונים כדי להמשיך!";
+"login_button_title" = "התחברות";
+"auth_to_proceed" = "אמת זהות כדי לגשת לאפליקציה";
