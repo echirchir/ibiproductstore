@@ -103,4 +103,16 @@ extension CoreDataManager {
             print("Failed to delete product: \(error)")
         }
     }
+    
+    func getFavoritedProducts() -> [ProductEntity] {
+        let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isFavorited == %@", NSNumber(value: true))
+        
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch favorited products: \(error)")
+            return []
+        }
+    }
 }
