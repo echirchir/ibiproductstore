@@ -1,0 +1,11 @@
+//
+//  Localizable.strings
+//  IBI Products Store
+//
+//  Created by Elisha Chirchir on 12/03/2025.
+//
+
+"login_screen_title" = "IBI Products Store";
+"products_screen_title" = "Products";
+"favorites_screen_title" = "Favorites";
+"settings_screen_title" = "Settings";

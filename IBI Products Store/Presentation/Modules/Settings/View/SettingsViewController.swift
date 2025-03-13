@@ -29,6 +29,8 @@ class SettingsViewController: UIViewController {
         } else {
             UserDefaultsManager.shared.languageCode = LanguageCode.hebrew.rawValue
         }
+        
+        // set app-wide language
     }
     
     @IBAction func onToggleDarkMode(_ sender: UISwitch) {

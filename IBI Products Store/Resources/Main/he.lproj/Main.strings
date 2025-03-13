@@ -1,0 +1,129 @@
+
+/* Class = "UIButton"; configuration.title = "Login"; ObjectID = "0yU-HJ-sgK"; */
+"0yU-HJ-sgK.configuration.title" = "Login";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0yU-HJ-sgK"; */
+"0yU-HJ-sgK.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Language"; ObjectID = "1SI-kB-KYa"; */
+"1SI-kB-KYa.text" = "Language";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "1xz-jL-g3u"; */
+"1xz-jL-g3u.text" = "Brand";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "3nI-xV-DwJ"; */
+"3nI-xV-DwJ.text" = "Brand";
+
+/* Class = "UILabel"; text = "$3,000"; ObjectID = "3rP-2d-7Md"; */
+"3rP-2d-7Md.text" = "$3,000";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "6Ov-Fx-2t3"; */
+"6Ov-Fx-2t3.placeholder" = "Username";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "6ft-Yk-Z2o"; */
+"6ft-Yk-Z2o.title" = "Settings";
+
+/* Class = "UIButton"; configuration.title = "Delete"; ObjectID = "DiZ-73-DdR"; */
+"DiZ-73-DdR.configuration.title" = "Delete";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "DiZ-73-DdR"; */
+"DiZ-73-DdR.normalTitle" = "Button";
+
+/* Class = "UITabBarItem"; title = "Products"; ObjectID = "Dk3-IQ-9dy"; */
+"Dk3-IQ-9dy.title" = "Products";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "FF0-mS-alF"; */
+"FF0-mS-alF.text" = "Description";
+
+/* Class = "UIViewController"; title = "Product Details"; ObjectID = "Gk9-vI-OQj"; */
+"Gk9-vI-OQj.title" = "Product Details";
+
+/* Class = "UILabel"; text = "IBI Products Store"; ObjectID = "JEG-XE-WcP"; */
+"JEG-XE-WcP.text" = "IBI Products Store";
+
+/* Class = "UIButton"; configuration.title = "Logout"; ObjectID = "NHc-ma-qQk"; */
+"NHc-ma-qQk.configuration.title" = "Logout";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "NHc-ma-qQk"; */
+"NHc-ma-qQk.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "Products"; ObjectID = "Nhw-6a-Np7"; */
+"Nhw-6a-Np7.title" = "Products";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "P0e-Y9-n40"; */
+"P0e-Y9-n40.text" = "Price";
+
+/* Class = "UIViewController"; title = "Products"; ObjectID = "PoT-9Y-sXo"; */
+"PoT-9Y-sXo.title" = "Products";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "Q8L-ck-34D"; */
+"Q8L-ck-34D.text" = "Price";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "QRE-3p-Cxd"; */
+"QRE-3p-Cxd.text" = "Brand";
+
+/* Class = "UINavigationItem"; title = "Product Details"; ObjectID = "SMy-M6-Nv8"; */
+"SMy-M6-Nv8.title" = "Product Details";
+
+/* Class = "UIButton"; configuration.title = "Edit"; ObjectID = "VLO-Ht-Jvq"; */
+"VLO-Ht-Jvq.configuration.title" = "Edit";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "VLO-Ht-Jvq"; */
+"VLO-Ht-Jvq.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "YEz-Yw-JjW"; */
+"YEz-Yw-JjW.text" = "Name";
+
+/* Class = "UISegmentedControl"; Yib-Qm-ABe.segmentTitles[0] = "English"; ObjectID = "Yib-Qm-ABe"; */
+"Yib-Qm-ABe.segmentTitles[0]" = "English";
+
+/* Class = "UISegmentedControl"; Yib-Qm-ABe.segmentTitles[1] = "Hebrew"; ObjectID = "Yib-Qm-ABe"; */
+"Yib-Qm-ABe.segmentTitles[1]" = "Hebrew";
+
+/* Class = "UILabel"; text = "TItle"; ObjectID = "ZLA-xM-v1I"; */
+"ZLA-xM-v1I.text" = "TItle";
+
+/* Class = "UILabel"; text = "Macbook Pro"; ObjectID = "afW-zC-QG8"; */
+"afW-zC-QG8.text" = "Macbook Pro";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "agG-R1-9X9"; */
+"agG-R1-9X9.title" = "Settings";
+
+/* Class = "UILabel"; text = "Dark Mode"; ObjectID = "cez-2m-RJz"; */
+"cez-2m-RJz.text" = "Dark Mode";
+
+/* Class = "UILabel"; text = "OR"; ObjectID = "dMK-bw-sP0"; */
+"dMK-bw-sP0.text" = "OR";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "dmQ-Uf-Lix"; */
+"dmQ-Uf-Lix.text" = "Description";
+
+/* Class = "UILabel"; text = "Macintosh"; ObjectID = "fn0-HQ-2HH"; */
+"fn0-HQ-2HH.text" = "Macintosh";
+
+/* Class = "UIViewController"; title = "Favorites"; ObjectID = "jMv-ma-rwo"; */
+"jMv-ma-rwo.title" = "Favorites";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "jOc-J2-dfb"; */
+"jOc-J2-dfb.placeholder" = "Username";
+
+/* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "n58-8l-LFJ"; */
+"n58-8l-LFJ.title" = "Favorites";
+
+/* Class = "UIViewController"; title = "Settings"; ObjectID = "ojo-9x-ILc"; */
+"ojo-9x-ILc.title" = "Settings";
+
+/* Class = "UILabel"; text = "This product is made by Apple Inc"; ObjectID = "r6l-2o-tAd"; */
+"r6l-2o-tAd.text" = "This product is made by Apple Inc";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "tks-XM-CJR"; */
+"tks-XM-CJR.text" = "Price";
+
+/* Class = "UITabBarController"; title = "Favorites"; ObjectID = "ufE-AU-Nmt"; */
+"ufE-AU-Nmt.title" = "Favorites";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "w94-lv-Ur7"; */
+"w94-lv-Ur7.text" = "Description";
+
+/* Class = "UILabel"; text = "TItle"; ObjectID = "z1O-Q7-ojr"; */
+"z1O-Q7-ojr.text" = "TItle";
