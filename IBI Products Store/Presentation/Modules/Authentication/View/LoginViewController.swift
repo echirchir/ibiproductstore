@@ -17,6 +17,7 @@ final class LoginViewController: UIViewController {
     
     @IBOutlet weak var lottieAnimation: UIView!
     
+    @IBOutlet weak var orLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var loginTitle: UILabel!
     private let viewModel = LoginViewModel()
@@ -65,8 +66,11 @@ final class LoginViewController: UIViewController {
     }
     
     private func updateUI() {
+        userNameField.placeholder = "username_placeholder".localized
+        userPasswordField.placeholder = "password_placeholder".localized
         loginTitle.text = "login_screen_title".localized
         loginButton.titleLabel?.text = "login_button_title".localized
+        orLabel.text = "or_label".localized
     }
     
     @objc func onSuccessfulAuthentication() {

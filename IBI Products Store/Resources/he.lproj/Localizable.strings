@@ -22,7 +22,10 @@
 "price" = "מחיר";
 
 // login
+"username_placeholder" = "שם משתמש";
+"password_placeholder" = "סיסמה";
 "invalid_credentials" = "אישורים לא חוקיים";
 "invalid_creds_details" = "אנא הזן אישורים נכונים כדי להמשיך!";
 "login_button_title" = "התחברות";
 "auth_to_proceed" = "אמת זהות כדי לגשת לאפליקציה";
+"or_label" = "או";

@@ -57,7 +57,7 @@ extension Network {
     fileprivate var schema: String {
         get { return "https" }
     }
-    /// provide our host here for the-reach-trust develop
+    /// provide our host here for products api
     fileprivate var base_url_products: String {
         get { return "dummyjson.com/" }
     }
