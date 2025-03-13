@@ -17,7 +17,7 @@ class ProductDetailsViewController: UIViewController {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     
-    var product: Product?
+    var product: LocalProduct?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,14 @@ class ProductDetailsViewController: UIViewController {
         productBrand.text = product?.brand
         productPrice.text = "₪\(product?.price ?? 0.0)"
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleFavoriteOfProduct))
+        favoriteProductImage.addGestureRecognizer(tapGesture)
+        
+        updateFavoriteButton(isFavorited: product?.isFavorited ?? false)
+    }
+    
+    @objc func handleFavoriteOfProduct() {
+        toggleFavorite()
     }
     
     @IBAction func onDeleteProductAction(_ sender: Any) {
@@ -36,5 +44,25 @@ class ProductDetailsViewController: UIViewController {
     
     @IBAction func onEditProductAction(_ sender: Any) {
         
+    }
+    
+    func toggleFavorite() {
+        guard let product = product else { return }
+        
+        // Toggle isFavorited in Core Data and get the new state
+        let newFavoriteState = CoreDataManager.shared.toggleFavorite(for: product.id)
+        
+        // Update the local product property
+        self.product?.isFavorited = newFavoriteState
+        
+        // Optionally, update the UI to reflect the new state
+        updateFavoriteButton(isFavorited: newFavoriteState)
+    }
+    
+    private func updateFavoriteButton(isFavorited: Bool) {
+        favoriteProductImage.setImage(
+            isFavorited ? UIImage(systemName: "star.fill") : UIImage(systemName: "star"),
+            for: .normal
+        )
     }
 }

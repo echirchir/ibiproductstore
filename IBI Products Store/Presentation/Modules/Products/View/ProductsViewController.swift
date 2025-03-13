@@ -68,7 +68,7 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showProductDetails" {
             if let detailVC = segue.destination as? ProductDetailsViewController,
-               let selectedProduct = sender as? Product {
+               let selectedProduct = sender as? LocalProduct {
                 detailVC.product = selectedProduct
             }
         }

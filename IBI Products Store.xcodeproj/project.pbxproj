@@ -10,6 +10,7 @@
 		61915A9C2D81C3FA00CB3B5F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 61915A9B2D81C3FA00CB3B5F /* Alamofire */; };
 		61915AA12D81D68900CB3B5F /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 61915AA02D81D68900CB3B5F /* SDWebImage */; };
 		61B26B1F2D82509500D60DA1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 61B26B1E2D82509500D60DA1 /* Lottie */; };
+		61B26B222D82970500D60DA1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61B26B212D82970500D60DA1 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		619159B42D816FE900CB3B5F /* IBI Products Store.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IBI Products Store.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		619159CA2D816FEA00CB3B5F /* IBI Products StoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IBI Products StoreTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		619159D42D816FEA00CB3B5F /* IBI Products StoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IBI Products StoreUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61B26B212D82970500D60DA1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61B26B222D82970500D60DA1 /* CoreData.framework in Frameworks */,
 				61915AA12D81D68900CB3B5F /* SDWebImage in Frameworks */,
 				61915A9C2D81C3FA00CB3B5F /* Alamofire in Frameworks */,
 				61B26B1F2D82509500D60DA1 /* Lottie in Frameworks */,
@@ -100,6 +103,7 @@
 				619159B62D816FE900CB3B5F /* IBI Products Store */,
 				619159CD2D816FEA00CB3B5F /* IBI Products StoreTests */,
 				619159D72D816FEA00CB3B5F /* IBI Products StoreUITests */,
+				61B26B202D82970500D60DA1 /* Frameworks */,
 				619159B52D816FE900CB3B5F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +116,14 @@
 				619159D42D816FEA00CB3B5F /* IBI Products StoreUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		61B26B202D82970500D60DA1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61B26B212D82970500D60DA1 /* CoreData.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -37,7 +37,6 @@ final class LoginViewController: UIViewController {
         lottieAnimationView?.loopMode = .loop
         lottieAnimationView?.play()
 
-        // Add to the UIView
         lottieAnimation.addSubview(lottieAnimationView!)
     }
     
