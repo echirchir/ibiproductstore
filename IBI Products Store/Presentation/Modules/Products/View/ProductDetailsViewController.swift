@@ -41,7 +41,12 @@ class ProductDetailsViewController: UIViewController {
     }
     
     @IBAction func onDeleteProductAction(_ sender: Any) {
-        CoreDataManager.shared.deleteProduct(withId: product?.id ?? 0)
+        do {
+            try CoreDataManager.shared.deleteProduct(withId: product?.id ?? 0)
+        } catch {
+            print("Deletion failed here")
+        }
+        
         delegate?.didDeleteProduct(withId: product?.id ?? 0)
         navigationController?.popViewController(animated: true)
     }
@@ -52,9 +57,13 @@ class ProductDetailsViewController: UIViewController {
     
     func toggleFavorite() {
         guard let product = product else { return }
-        let newFavoriteState = CoreDataManager.shared.toggleFavorite(for: product.id)
-        self.product?.isFavorited = newFavoriteState
-        updateFavoriteButton(isFavorited: newFavoriteState)
+        do {
+            let newFavoriteState = try CoreDataManager.shared.toggleFavorite(for: product.id)
+            self.product?.isFavorited = newFavoriteState
+            updateFavoriteButton(isFavorited: newFavoriteState)
+        } catch {
+            print("Toggling failed")
+        }
     }
     
     private func updateFavoriteButton(isFavorited: Bool) {

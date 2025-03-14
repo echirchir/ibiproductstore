@@ -50,7 +50,11 @@ class ProductsViewModel {
                         self.totalProducts = results.total
                         self.skip += results.products.count
                         
-                        CoreDataManager.shared.saveProducts(results.products)
+                        do {
+                            try CoreDataManager.shared.saveProducts(results.products)
+                        } catch {
+                            
+                        }
                         
                         completion(true)
                     case .failure(_):
@@ -66,11 +70,10 @@ class ProductsViewModel {
     }
     
     private func fetchProductsFromCoreData() -> [LocalProduct] {
-        let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
         
         do {
-            let productEntities = try CoreDataManager.shared.context.fetch(fetchRequest)
-            return productEntities.map { LocalProduct(from: $0) }
+            let productEntities = try CoreDataManager.shared.getAllProducts()
+            return productEntities
         } catch {
             print("Failed to fetch products from Core Data: \(error)")
             return []
