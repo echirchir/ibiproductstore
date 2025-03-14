@@ -59,7 +59,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         if segue.identifier == "favoriteDetails" {
             if let detailVC = segue.destination as? ProductDetailsViewController,
                let selectedProduct = sender as? LocalProduct {
-                detailVC.delegate = self
+                 detailVC.delegate = self
                  detailVC.product = selectedProduct
             }
         }

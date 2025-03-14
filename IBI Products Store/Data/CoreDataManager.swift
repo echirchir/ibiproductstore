@@ -7,112 +7,158 @@
 
 import Foundation
 import CoreData
+import os.log
 
-class CoreDataManager {
+protocol CoreDataManagerProtocol {
+    func saveProducts(_ products: [Product]) throws
+    func toggleFavorite(for productId: Int) throws -> Bool
+    func deleteProduct(withId productId: Int) throws
+    func getFavoritedProducts() throws -> [ProductEntity]
+}
+
+final class CoreDataManager: CoreDataManagerProtocol {
     static let shared = CoreDataManager()
     
     private init() {}
     
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "IBIDataModel")
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                self.logError(error)
+                assertionFailure("Unresolved error \(error), \(error.userInfo)")
             }
         }
         return container
     }()
     
-    var context: NSManagedObjectContext {
+    private var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
-    func saveContext() {
-        if context.hasChanges {
+    private lazy var backgroundContext: NSManagedObjectContext = {
+        let context = persistentContainer.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        return context
+    }()
+    
+    private func saveContext(_ context: NSManagedObjectContext) throws {
+        guard context.hasChanges else { return }
+        do {
+            try context.save()
+        } catch {
+            self.logError(error)
+            throw CoreDataError.saveFailed(error)
+        }
+    }
+    
+    func saveProducts(_ products: [Product]) throws {
+        try backgroundContext.performAndWait {
+            for product in products {
+                let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %d", product.id)
+                
+                do {
+                    let existingProducts = try backgroundContext.fetch(fetchRequest)
+                    if let existingProduct = existingProducts.first {
+                        update(existingProduct, with: product)
+                    } else {
+                        createProductEntity(from: product, in: backgroundContext)
+                    }
+                } catch {
+                    self.logError(error)
+                    throw CoreDataError.fetchFailed(error)
+                }
+            }
+            try saveContext(backgroundContext)
+        }
+    }
+    
+    func toggleFavorite(for productId: Int) throws -> Bool {
+        try backgroundContext.performAndWait {
+            let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %d", productId)
+            
             do {
-                try context.save()
+                guard let productEntity = try backgroundContext.fetch(fetchRequest).first else {
+                    throw CoreDataError.entityNotFound
+                }
+                productEntity.isFavorited.toggle()
+                try saveContext(backgroundContext)
+                return productEntity.isFavorited
             } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                self.logError(error)
+                throw CoreDataError.fetchFailed(error)
             }
         }
+    }
+    
+    func deleteProduct(withId productId: Int) throws {
+        try backgroundContext.performAndWait {
+            let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %d", productId)
+            
+            do {
+                guard let productEntity = try backgroundContext.fetch(fetchRequest).first else {
+                    throw CoreDataError.entityNotFound
+                }
+                backgroundContext.delete(productEntity)
+                try saveContext(backgroundContext)
+            } catch {
+                self.logError(error)
+                throw CoreDataError.fetchFailed(error)
+            }
+        }
+    }
+    
+    func getFavoritedProducts() throws -> [ProductEntity] {
+        try viewContext.performAndWait {
+            let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "isFavorited == %@", NSNumber(value: true))
+            
+            do {
+                return try viewContext.fetch(fetchRequest)
+            } catch {
+                self.logError(error)
+                throw CoreDataError.fetchFailed(error)
+            }
+        }
+    }
+    
+    func getAllProducts() throws -> [LocalProduct] {
+        try viewContext.performAndWait {
+            let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+            let productEntities = try viewContext.fetch(fetchRequest)
+            return productEntities.map { LocalProduct(from: $0) }
+        }
+    }
+    
+    private func update(_ productEntity: ProductEntity, with product: Product) {
+        productEntity.title = product.title
+        productEntity.brand = product.brand
+        productEntity.price = product.price
+        productEntity.thumbnail = product.thumbnail
+        productEntity.desc = product.description
+    }
+    
+    private func createProductEntity(from product: Product, in context: NSManagedObjectContext) {
+        let productEntity = ProductEntity(context: context)
+        productEntity.id = Int64(product.id)
+        productEntity.title = product.title
+        productEntity.brand = product.brand
+        productEntity.price = product.price
+        productEntity.thumbnail = product.thumbnail
+        productEntity.desc = product.description
+        productEntity.isFavorited = false
+    }
+    
+    private func logError(_ error: Error) {
+        os_log("CoreData Error: %@", log: .default, type: .error, error.localizedDescription)
     }
 }
 
-extension CoreDataManager {
-    func saveProducts(_ products: [Product]) {
-        for product in products {
-            
-            print("The product saved is \(product.title)")
-            let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %d", product.id)
-            
-            do {
-                let existingProducts = try context.fetch(fetchRequest)
-                
-                if let existingProduct = existingProducts.first {
-                    existingProduct.title = product.title
-                    existingProduct.brand = product.brand
-                    existingProduct.price = product.price
-                    existingProduct.thumbnail = product.thumbnail
-                    existingProduct.desc = product.description
-                } else {
-                    let productEntity = ProductEntity(context: context)
-                    productEntity.id = Int64(product.id)
-                    productEntity.title = product.title
-                    productEntity.brand = product.brand
-                    productEntity.price = product.price
-                    productEntity.thumbnail = product.thumbnail
-                    productEntity.desc = product.description
-                    productEntity.isFavorited = false
-                }
-            } catch {
-                print("Failed to fetch existing product: \(error)")
-            }
-        }
-        
-        saveContext()
-    }
-    
-    func toggleFavorite(for productId: Int) -> Bool {
-        let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %d", productId)
-        
-        do {
-            if let productEntity = try context.fetch(fetchRequest).first {
-                productEntity.isFavorited.toggle()
-                saveContext()
-                return productEntity.isFavorited
-            }
-        } catch {
-            print("Failed to toggle favorite: \(error)")
-        }
-        return false
-    }
-    
-    func deleteProduct(withId productId: Int) {
-        let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %d", productId)
-        
-        do {
-            if let productEntity = try context.fetch(fetchRequest).first {
-                context.delete(productEntity)
-                saveContext()
-            }
-        } catch {
-            print("Failed to delete product: \(error)")
-        }
-    }
-    
-    func getFavoritedProducts() -> [ProductEntity] {
-        let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "isFavorited == %@", NSNumber(value: true))
-        
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch favorited products: \(error)")
-            return []
-        }
-    }
+enum CoreDataError: Error {
+    case entityNotFound
+    case saveFailed(Error)
+    case fetchFailed(Error)
 }

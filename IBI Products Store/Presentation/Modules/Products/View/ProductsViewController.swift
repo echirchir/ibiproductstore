@@ -83,7 +83,7 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         scrollView.layoutIfNeeded()
         
         if offsetY > contentHeight - (height + insetBottom) {
-            if viewModel.products.count < viewModel.totalProducts && !isFetching{
+            if viewModel.products.count < viewModel.totalProducts && !isFetching {
                 isFetching = true
                 self.fetchMoreProducts()
             }

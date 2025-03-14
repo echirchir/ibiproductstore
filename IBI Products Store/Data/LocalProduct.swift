@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct LocalProduct {
     let id: Int
     let title: String

@@ -11,18 +11,22 @@ class FavoritesViewModel {
     @Published var products: [LocalProduct] = []
     
     func loadFavoritedProducts() {
-        let favoritedEntities = CoreDataManager.shared.getFavoritedProducts()
-        
-        products = favoritedEntities.map { entity in
-            LocalProduct(
-                id: Int(entity.id),
-                title: entity.title ?? "",
-                brand: entity.brand ?? "",
-                price: entity.price,
-                thumbnail: entity.thumbnail ?? "",
-                description: entity.desc ?? "",
-                isFavorited: entity.isFavorited
-            )
+        do {
+            let favoritedEntities = try CoreDataManager.shared.getFavoritedProducts()
+            
+            products = favoritedEntities.map { entity in
+                LocalProduct(
+                    id: Int(entity.id),
+                    title: entity.title ?? "",
+                    brand: entity.brand ?? "Not Available",
+                    price: entity.price,
+                    thumbnail: entity.thumbnail ?? "",
+                    description: entity.desc ?? "",
+                    isFavorited: entity.isFavorited
+                )
+            }
+        } catch {
+            print("Error: \(error)")
         }
     }
 }
