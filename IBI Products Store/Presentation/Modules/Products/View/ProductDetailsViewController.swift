@@ -52,7 +52,22 @@ class ProductDetailsViewController: UIViewController {
     }
     
     @IBAction func onEditProductAction(_ sender: Any) {
-        
+        performSegue(withIdentifier: "showEditProduct", sender: product)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEditProduct" {
+            if let editProductViewController = segue.destination as? EditProductViewController,
+               let selectedProduct = sender as? LocalProduct {
+                editProductViewController.product = selectedProduct
+                editProductViewController.onUpdateComplete = { product in
+                    if let product = product {
+                        self.productName.text = product.title
+                        self.productPrice.text = "₪\(product.price)"
+                    }
+                }
+            }
+        }
     }
     
     func toggleFavorite() {
@@ -62,7 +77,7 @@ class ProductDetailsViewController: UIViewController {
             self.product?.isFavorited = newFavoriteState
             updateFavoriteButton(isFavorited: newFavoriteState)
         } catch {
-            print("Toggling failed")
+            debugPrint("Toggling failed")
         }
     }
     

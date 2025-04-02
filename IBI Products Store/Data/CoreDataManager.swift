@@ -74,6 +74,41 @@ final class CoreDataManager: CoreDataManagerProtocol {
         }
     }
     
+    func updateExistingProduct(id: Int, title: String, price: Double) throws -> ProductEntity {
+        var result: ProductEntity!
+        
+        try backgroundContext.performAndWait {
+            let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+            
+            do {
+                let existingProducts = try backgroundContext.fetch(fetchRequest)
+                
+                guard let existingProduct = existingProducts.first else {
+                    throw CoreDataError.entityNotFound
+                }
+                
+                let updatedProduct = saveEdits(existingProduct, title: title, price: price)
+                
+                try backgroundContext.save()
+                
+                result = updatedProduct
+                
+            } catch {
+                self.logError(error)
+                throw CoreDataError.updateFailed(error)
+            }
+        }
+        
+        return result
+    }
+
+    private func saveEdits(_ product: ProductEntity, title: String, price: Double) -> ProductEntity {
+        product.title = title
+        product.price = price
+        return product
+    }
+    
     func toggleFavorite(for productId: Int) throws -> Bool {
         try backgroundContext.performAndWait {
             let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
@@ -159,6 +194,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
 
 enum CoreDataError: Error {
     case entityNotFound
+    case updateFailed(Error)
     case saveFailed(Error)
     case fetchFailed(Error)
 }

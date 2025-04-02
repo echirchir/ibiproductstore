@@ -8,9 +8,9 @@
 import Foundation
 
 struct Dimensions: Codable {
-    let width: Double
-    let height: Double
-    let depth: Double
+    let width: Double?
+    let height: Double?
+    let depth: Double?
     
     enum CodingKeys: String, CodingKey {
         case width = "width"

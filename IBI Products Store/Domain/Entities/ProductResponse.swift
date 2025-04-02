@@ -8,10 +8,10 @@
 import Foundation
 
 struct ProductResponse: Codable {
-    let products: [Product]
-    let total: Int
-    let skip: Int
-    let limit: Int
+    let products: [Product]?
+    let total: Int?
+    let skip: Int?
+    let limit: Int?
     
     enum CodingKeys: String, CodingKey {
         case products = "products"

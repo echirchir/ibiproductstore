@@ -8,11 +8,11 @@
 import Foundation
 
 struct Review: Codable {
-    let rating: Int
-    let comment: String
-    let date: String
-    let reviewerName: String
-    let reviewerEmail: String
+    let rating: Int?
+    let comment: String?
+    let date: String?
+    let reviewerName: String?
+    let reviewerEmail: String?
     
     enum CodingKeys: String, CodingKey {
         case rating = "rating"

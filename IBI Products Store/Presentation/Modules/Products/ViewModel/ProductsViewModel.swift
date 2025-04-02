@@ -33,7 +33,7 @@ class ProductsViewModel {
                     
                     switch dataResponse.result {
                     case .success(let results):
-                        let localProducts = results.products.map { product in
+                        let localProducts = results.products?.map { product in
                             LocalProduct(
                                 id: product.id,
                                 title: product.title,
@@ -45,13 +45,13 @@ class ProductsViewModel {
                             )
                         }
                         
-                        self.products.append(contentsOf: localProducts)
+                        self.products.append(contentsOf: localProducts ?? [])
                         
-                        self.totalProducts = results.total
-                        self.skip += results.products.count
+                        self.totalProducts = results.total ?? 0
+                        self.skip += results.products?.count ?? 0
                         
                         do {
-                            try CoreDataManager.shared.saveProducts(results.products)
+                            try CoreDataManager.shared.saveProducts(results.products ?? [])
                         } catch {
                             debugPrint(error.localizedDescription)
                         }
@@ -75,7 +75,7 @@ class ProductsViewModel {
             let productEntities = try CoreDataManager.shared.getAllProducts()
             return productEntities
         } catch {
-            print("Failed to fetch products from Core Data: \(error)")
+            debugPrint("Failed to fetch products from Core Data: \(error)")
             return []
         }
     }
