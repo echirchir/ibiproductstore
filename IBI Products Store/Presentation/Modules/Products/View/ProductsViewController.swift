@@ -10,6 +10,8 @@ import SDWebImage
 
 class ProductsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var filterImageView: UIImageView!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var productsUiTable: UITableView!
     private var viewModel: ProductsViewModel
     private let activityIndicator = UIActivityIndicatorView(style: .large)
