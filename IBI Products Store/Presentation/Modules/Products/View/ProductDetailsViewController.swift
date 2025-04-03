@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import LocalAuthentication
 
 class ProductDetailsViewController: UIViewController {
     
@@ -17,9 +18,24 @@ class ProductDetailsViewController: UIViewController {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     
+    @IBOutlet weak var editProductButton: UIButton!
+    @IBOutlet weak var deleteProductButton: UIButton!
     weak var delegate: DetailsViewControllerDelegate?
     
     var product: LocalProduct?
+    
+    let isBiometricsAvailable: Bool = {
+        let context = LAContext()
+        var error: NSError?
+        
+        let isAvailable = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        
+        if let error = error {
+            print("Biometrics check error: \(error.localizedDescription)")
+        }
+        
+        return isAvailable
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +50,9 @@ class ProductDetailsViewController: UIViewController {
         favoriteProductImage.addGestureRecognizer(tapGesture)
         
         updateFavoriteButton(isFavorited: product?.isFavorited ?? false)
+        
+        editProductButton.isEnabled = isBiometricsAvailable
+        deleteProductButton.isEnabled = isBiometricsAvailable
     }
     
     @objc func handleFavoriteOfProduct() {
@@ -41,18 +60,34 @@ class ProductDetailsViewController: UIViewController {
     }
     
     @IBAction func onDeleteProductAction(_ sender: Any) {
-        do {
-            try CoreDataManager.shared.deleteProduct(withId: product?.id ?? 0)
-        } catch {
-            print("Deletion failed here")
+        authenticateWithBio { [weak self] (success: Bool) in
+            guard let self = self, let productId = self.product?.id else { return }
+            
+            if success {
+                do {
+                    try CoreDataManager.shared.deleteProductFromCoreData(withId: productId)
+                    self.delegate?.didDeleteProduct(withId: productId)
+                    self.navigationController?.popViewController(animated: true)
+                } catch {
+                    print("Deletion failed: \(error.localizedDescription)")
+                    self.showAlert(title: "Error", message: "Authentication failed")
+                }
+            } else {
+                self.showAlert(title: "Error", message: "Something bad happened!")
+            }
         }
-        
-        delegate?.didDeleteProduct(withId: product?.id ?? 0)
-        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func onEditProductAction(_ sender: Any) {
-        performSegue(withIdentifier: "showEditProduct", sender: product)
+        authenticateWithBio { [weak self] (success: Bool) in
+            guard let self = self, let productId = self.product?.id else { return }
+            
+            if success {
+                performSegue(withIdentifier: "showEditProduct", sender: product)
+            } else {
+                self.showAlert(title: "Error", message: "Authentication failed or something!!")
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -60,10 +95,13 @@ class ProductDetailsViewController: UIViewController {
             if let editProductViewController = segue.destination as? EditProductViewController,
                let selectedProduct = sender as? LocalProduct {
                 editProductViewController.product = selectedProduct
-                editProductViewController.onUpdateComplete = { product in
-                    if let product = product {
-                        self.productName.text = product.title
-                        self.productPrice.text = "₪\(product.price)"
+                editProductViewController.onUpdateComplete = { result in
+                    if let updatedProduct = result {
+                        self.product?.title = updatedProduct.title ?? ""
+                        self.product?.price = updatedProduct.price
+                        self.productName.text = self.product?.title
+                        self.productPrice.text = "₪\(self.product?.price ?? 0.0)"
+                        self.delegate?.productWasUpdated?(withId: Int(updatedProduct.id))
                     }
                 }
             }
@@ -76,6 +114,7 @@ class ProductDetailsViewController: UIViewController {
             let newFavoriteState = try CoreDataManager.shared.toggleFavorite(for: product.id)
             self.product?.isFavorited = newFavoriteState
             updateFavoriteButton(isFavorited: newFavoriteState)
+            self.delegate?.productWasUpdated?(withId: Int(product.id))
         } catch {
             debugPrint("Toggling failed")
         }
@@ -87,5 +126,35 @@ class ProductDetailsViewController: UIViewController {
         
         favoriteProductImage.image = starImage
         favoriteProductImage.tintColor = isFavorited ? .systemYellow : .systemGray
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+}
+
+extension ProductDetailsViewController {
+    func authenticateWithBio(completion: @escaping (Bool) -> Void) {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "auth_to_proceed".localized
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                DispatchQueue.main.async {
+                    if success {
+                        completion(true)
+                    } else {
+                        // Authentication failed
+                        self.showAlert(title: "Error", message: authenticationError?.localizedDescription ?? "Failed to authenticate")
+                    }
+                }
+            }
+        } else {
+            showAlert(title: "Unavailable", message: "Biometric authentication is not available on this device.")
+        }
     }
 }

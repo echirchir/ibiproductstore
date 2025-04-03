@@ -7,6 +7,7 @@
 
 import Foundation
 
-protocol DetailsViewControllerDelegate: AnyObject {
+@objc protocol DetailsViewControllerDelegate: AnyObject {
     func didDeleteProduct(withId productId: Int)
+    @objc optional func productWasUpdated(withId productId: Int)
 }

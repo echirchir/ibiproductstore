@@ -18,6 +18,8 @@ class ProductsViewModel {
     private var skip = 0
     private let limit = 30
     private var isFetching = false
+    var shouldRefresh: Bool = false
+    var productId: Int? = 0
     
     func fetchProducts(completion: @escaping((Bool) -> Void)) {
         guard !isFetching else { return }
@@ -70,7 +72,6 @@ class ProductsViewModel {
     }
     
     private func fetchProductsFromCoreData() -> [LocalProduct] {
-        
         do {
             let productEntities = try CoreDataManager.shared.getAllProducts()
             return productEntities
@@ -80,8 +81,40 @@ class ProductsViewModel {
         }
     }
     
-    deinit {
-        cancellables.removeAll()
-        ProductsRepository.destroy()
+    func refreshProduct(completion: @escaping((Bool) -> Void)) {
+        do {
+            guard let editedProductId = self.productId else {
+                completion(false)
+                return
+            }
+            
+            guard let productEntity = try CoreDataManager.shared.getProductById(editedProductId) else {
+                completion(false)
+                return
+            }
+        
+            if let index = products.firstIndex(where: { $0.id == productEntity.id }) {
+                let updatedProduct = LocalProduct(
+                    id: Int(productEntity.id),
+                    title: productEntity.title ?? "",
+                    brand: products[index].brand,
+                    price: productEntity.price,
+                    thumbnail: products[index].thumbnail,
+                    description: products[index].description,
+                    isFavorited: productEntity.isFavorited
+                )
+                
+                DispatchQueue.main.async {
+                    self.products[index] = updatedProduct
+                }
+            } else {
+                print("Product not found in local array")
+            }
+            
+            completion(true)
+        } catch {
+            completion(false)
+            debugPrint("Failed to fetch products from Core Data: \(error)")
+        }
     }
 }

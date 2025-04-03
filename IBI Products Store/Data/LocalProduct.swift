@@ -9,9 +9,9 @@ import Foundation
 
 struct LocalProduct {
     let id: Int
-    let title: String
+    var title: String
     let brand: String?
-    let price: Double
+    var price: Double
     let thumbnail: String
     let description: String
     var isFavorited: Bool

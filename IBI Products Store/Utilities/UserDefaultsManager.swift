@@ -34,6 +34,7 @@ class UserDefaultsManager {
         set {
             manager.set(newValue, forKey: UserDefaultsKeys.languageCode)
             manager.synchronize()
+            
             NotificationCenter.default.post(name: Notification.Name("LanguageChanged"), object: nil)
         }
         get {

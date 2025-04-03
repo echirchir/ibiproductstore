@@ -24,6 +24,11 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.viewModel = ProductsViewModel()
         super.init(coder: coder)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reloadProductsIfNeeded()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +36,18 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         productsUiTable.delegate = self
         setupLoadingIndicator()
         fetchInitialProducts()
+    }
+    
+    private func reloadProductsIfNeeded() {
+        if viewModel.shouldRefresh {
+            debugPrint("The favorited product is: refresh needed")
+            viewModel.refreshProduct { complete in
+                DispatchQueue.main.async {
+                    self.productsUiTable?.reloadData()
+                }
+            }
+            viewModel.shouldRefresh = false
+        }
     }
     
     private func setupLoadingIndicator() {
@@ -118,8 +135,13 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
 }
 
 extension ProductsViewController: DetailsViewControllerDelegate {
+    func productWasUpdated(withId productId: Int) {
+        viewModel.shouldRefresh = true
+        viewModel.productId = productId
+    }
+
     func didDeleteProduct(withId productId: Int) {
         viewModel.products.removeAll { $0.id == productId }
-        productsUiTable.reloadData()
+        self.productsUiTable.reloadData()
     }
 }

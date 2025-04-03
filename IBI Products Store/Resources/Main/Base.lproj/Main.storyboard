@@ -584,6 +584,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Product Details" id="SMy-M6-Nv8"/>
                     <connections>
+                        <outlet property="deleteProductButton" destination="DiZ-73-DdR" id="x3N-Ew-HXb"/>
+                        <outlet property="editProductButton" destination="VLO-Ht-Jvq" id="M2e-x4-SJ5"/>
                         <outlet property="favoriteProductImage" destination="qVe-e5-PdQ" id="kS4-Iz-mfI"/>
                         <outlet property="productBrand" destination="fn0-HQ-2HH" id="UU2-wE-Kza"/>
                         <outlet property="productDescription" destination="r6l-2o-tAd" id="a9e-Qn-RbQ"/>

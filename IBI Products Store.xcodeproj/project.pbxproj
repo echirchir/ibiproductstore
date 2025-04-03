@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -71,28 +71,22 @@
 /* Begin PBXFrameworksBuildPhase section */
 		619159B12D816FE900CB3B5F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				61B26B222D82970500D60DA1 /* CoreData.framework in Frameworks */,
 				61915AA12D81D68900CB3B5F /* SDWebImage in Frameworks */,
 				61915A9C2D81C3FA00CB3B5F /* Alamofire in Frameworks */,
 				61B26B1F2D82509500D60DA1 /* Lottie in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		619159C72D816FEA00CB3B5F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		619159D12D816FEA00CB3B5F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -139,8 +133,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				619159B62D816FE900CB3B5F /* IBI Products Store */,
 			);
@@ -171,8 +163,6 @@
 				619159CD2D816FEA00CB3B5F /* IBI Products StoreTests */,
 			);
 			name = "IBI Products StoreTests";
-			packageProductDependencies = (
-			);
 			productName = "IBI Products StoreTests";
 			productReference = 619159CA2D816FEA00CB3B5F /* IBI Products StoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -194,8 +184,6 @@
 				619159D72D816FEA00CB3B5F /* IBI Products StoreUITests */,
 			);
 			name = "IBI Products StoreUITests";
-			packageProductDependencies = (
-			);
 			productName = "IBI Products StoreUITests";
 			productReference = 619159D42D816FEA00CB3B5F /* IBI Products StoreUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -238,7 +226,7 @@
 				61915A9F2D81D68900CB3B5F /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				61B26B1D2D82509500D60DA1 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 619159B52D816FE900CB3B5F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -253,48 +241,36 @@
 /* Begin PBXResourcesBuildPhase section */
 		619159B22D816FE900CB3B5F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		619159C82D816FEA00CB3B5F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		619159D22D816FEA00CB3B5F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		619159B02D816FE900CB3B5F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		619159C62D816FEA00CB3B5F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		619159D02D816FEA00CB3B5F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -312,7 +288,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		619159DE2D816FEA00CB3B5F /* Debug */ = {
+		619159DE2D816FEA00CB3B5F /* Debug configuration for PBXNativeTarget "IBI Products Store" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -341,7 +317,7 @@
 			};
 			name = Debug;
 		};
-		619159DF2D816FEA00CB3B5F /* Release */ = {
+		619159DF2D816FEA00CB3B5F /* Release configuration for PBXNativeTarget "IBI Products Store" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -370,7 +346,7 @@
 			};
 			name = Release;
 		};
-		619159E02D816FEA00CB3B5F /* Debug */ = {
+		619159E02D816FEA00CB3B5F /* Debug configuration for PBXProject "IBI Products Store" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -434,7 +410,7 @@
 			};
 			name = Debug;
 		};
-		619159E12D816FEA00CB3B5F /* Release */ = {
+		619159E12D816FEA00CB3B5F /* Release configuration for PBXProject "IBI Products Store" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -491,7 +467,7 @@
 			};
 			name = Release;
 		};
-		619159E32D816FEA00CB3B5F /* Debug */ = {
+		619159E32D816FEA00CB3B5F /* Debug configuration for PBXNativeTarget "IBI Products StoreTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -510,7 +486,7 @@
 			};
 			name = Debug;
 		};
-		619159E42D816FEA00CB3B5F /* Release */ = {
+		619159E42D816FEA00CB3B5F /* Release configuration for PBXNativeTarget "IBI Products StoreTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -529,7 +505,7 @@
 			};
 			name = Release;
 		};
-		619159E62D816FEA00CB3B5F /* Debug */ = {
+		619159E62D816FEA00CB3B5F /* Debug configuration for PBXNativeTarget "IBI Products StoreUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -546,7 +522,7 @@
 			};
 			name = Debug;
 		};
-		619159E72D816FEA00CB3B5F /* Release */ = {
+		619159E72D816FEA00CB3B5F /* Release configuration for PBXNativeTarget "IBI Products StoreUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -569,37 +545,33 @@
 		619159AF2D816FE900CB3B5F /* Build configuration list for PBXProject "IBI Products Store" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				619159E02D816FEA00CB3B5F /* Debug */,
-				619159E12D816FEA00CB3B5F /* Release */,
+				619159E02D816FEA00CB3B5F /* Debug configuration for PBXProject "IBI Products Store" */,
+				619159E12D816FEA00CB3B5F /* Release configuration for PBXProject "IBI Products Store" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		619159DD2D816FEA00CB3B5F /* Build configuration list for PBXNativeTarget "IBI Products Store" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				619159DE2D816FEA00CB3B5F /* Debug */,
-				619159DF2D816FEA00CB3B5F /* Release */,
+				619159DE2D816FEA00CB3B5F /* Debug configuration for PBXNativeTarget "IBI Products Store" */,
+				619159DF2D816FEA00CB3B5F /* Release configuration for PBXNativeTarget "IBI Products Store" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		619159E22D816FEA00CB3B5F /* Build configuration list for PBXNativeTarget "IBI Products StoreTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				619159E32D816FEA00CB3B5F /* Debug */,
-				619159E42D816FEA00CB3B5F /* Release */,
+				619159E32D816FEA00CB3B5F /* Debug configuration for PBXNativeTarget "IBI Products StoreTests" */,
+				619159E42D816FEA00CB3B5F /* Release configuration for PBXNativeTarget "IBI Products StoreTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		619159E52D816FEA00CB3B5F /* Build configuration list for PBXNativeTarget "IBI Products StoreUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				619159E62D816FEA00CB3B5F /* Debug */,
-				619159E72D816FEA00CB3B5F /* Release */,
+				619159E62D816FEA00CB3B5F /* Debug configuration for PBXNativeTarget "IBI Products StoreUITests" */,
+				619159E72D816FEA00CB3B5F /* Release configuration for PBXNativeTarget "IBI Products StoreUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */

@@ -12,7 +12,7 @@ import os.log
 protocol CoreDataManagerProtocol {
     func saveProducts(_ products: [Product]) throws
     func toggleFavorite(for productId: Int) throws -> Bool
-    func deleteProduct(withId productId: Int) throws
+    func deleteProductFromCoreData(withId productId: Int) throws
     func getFavoritedProducts() throws -> [ProductEntity]
 }
 
@@ -128,7 +128,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
         }
     }
     
-    func deleteProduct(withId productId: Int) throws {
+    func deleteProductFromCoreData(withId productId: Int) throws {
         try backgroundContext.performAndWait {
             let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %d", productId)
@@ -144,6 +144,30 @@ final class CoreDataManager: CoreDataManagerProtocol {
                 throw CoreDataError.fetchFailed(error)
             }
         }
+    }
+    
+    func getProductById(_ productId: Int) throws -> ProductEntity? {
+        var result: ProductEntity?
+        var fetchError: Error?
+        
+        backgroundContext.performAndWait {
+            let fetchRequest: NSFetchRequest<ProductEntity> = ProductEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %d", productId)
+            fetchRequest.fetchLimit = 1
+            
+            do {
+                result = try backgroundContext.fetch(fetchRequest).first
+            } catch {
+                fetchError = error
+                self.logError(error)
+            }
+        }
+        
+        if let error = fetchError {
+            throw CoreDataError.entityNotFound
+        }
+        
+        return result
     }
     
     func getFavoritedProducts() throws -> [ProductEntity] {

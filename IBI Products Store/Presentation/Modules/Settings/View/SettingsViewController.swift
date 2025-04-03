@@ -41,11 +41,8 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func onLanguageChanged(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            UserDefaultsManager.shared.languageCode = LanguageCode.english.rawValue
-        } else {
-            UserDefaultsManager.shared.languageCode = LanguageCode.hebrew.rawValue
-        }
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {return}
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
     
     private func updateUI() {
