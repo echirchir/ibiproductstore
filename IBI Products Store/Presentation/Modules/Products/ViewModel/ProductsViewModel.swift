@@ -95,6 +95,14 @@ class ProductsViewModel {
         }
     }
     
+    func applySorting(_ filter: ProductFilter) {
+        if searchText.isEmpty {
+            products.sort(by: filter.sortComparator)
+        } else {
+            filteredProducts.sort(by: filter.sortComparator)
+        }
+    }
+    
     private func fetchProductsFromCoreData() -> [LocalProduct] {
         do {
             let productEntities = try CoreDataManager.shared.getAllProducts()

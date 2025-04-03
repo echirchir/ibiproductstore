@@ -18,6 +18,7 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var isFetching = false
     private var cancellables = Set<AnyCancellable>()
+    private var currentFilter: ProductFilter = .none
 
     init() {
         self.viewModel = ProductsViewModel()
@@ -42,6 +43,25 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         setupLoadingIndicator()
         fetchInitialProducts()
         setupBindings()
+        
+        filterImageView.isUserInteractionEnabled = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(filterTapped))
+        filterImageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc private func filterTapped() {
+        view.endEditing(true)
+        let filterVC = FilterProductsBottomSheet(selectedFilter: currentFilter) { [weak self] newFilter in
+            self?.currentFilter = newFilter
+            self?.applySorting(with: newFilter)
+        }
+        present(filterVC, animated: true)
+    }
+    
+    private func applySorting(with filter: ProductFilter) {
+        viewModel.applySorting(filter)
+        productsUiTable.reloadData()
     }
     
     private func reloadProductsIfNeeded() {
@@ -128,7 +148,7 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         scrollView.layoutIfNeeded()
         
-        if offsetY > contentHeight - (height + insetBottom) {
+        if offsetY > contentHeight - (height + insetBottom) && viewModel.searchText.isEmpty {
             if viewModel.displayedProducts.count < viewModel.totalProducts && !isFetching {
                 isFetching = true
                 self.fetchMoreProducts()

@@ -173,9 +173,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w94-lv-Ur7">
-                                                    <rect key="frame" x="108.00000000000001" y="26" width="202.33333333333337" height="31"/>
+                                                    <rect key="frame" x="108" y="26" width="265" height="31"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="202.33333333333337" id="tQ3-Bz-iUe"/>
+                                                        <constraint firstAttribute="width" constant="265" id="tQ3-Bz-iUe"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -184,7 +184,7 @@
                                             </subviews>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="w94-lv-Ur7" secondAttribute="trailing" constant="62.666666666666629" id="2nU-fD-ujA"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="w94-lv-Ur7" secondAttribute="trailing" id="2nU-fD-ujA"/>
                                                 <constraint firstAttribute="bottom" secondItem="6cs-6G-PFj" secondAttribute="bottom" id="48Q-m5-rTJ"/>
                                                 <constraint firstItem="w94-lv-Ur7" firstAttribute="top" secondItem="yfj-Bw-o8K" secondAttribute="topMargin" constant="15" id="5da-9E-Cuh"/>
                                                 <constraint firstItem="P0e-Y9-n40" firstAttribute="trailing" secondItem="yfj-Bw-o8K" secondAttribute="trailingMargin" constant="-53.666666666666629" id="66x-5T-uBp"/>
@@ -216,7 +216,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="DZU-KX-KeF">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="search" translatesAutoresizingMaskIntoConstraints="NO" id="DZU-KX-KeF">
                                 <rect key="frame" x="0.0" y="81" width="330" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
