@@ -69,7 +69,6 @@ class ProductDetailsViewController: UIViewController {
                     self.delegate?.didDeleteProduct(withId: productId)
                     self.navigationController?.popViewController(animated: true)
                 } catch {
-                    print("Deletion failed: \(error.localizedDescription)")
                     self.showAlert(title: "Error", message: "Authentication failed")
                 }
             } else {
@@ -148,7 +147,6 @@ extension ProductDetailsViewController {
                     if success {
                         completion(true)
                     } else {
-                        // Authentication failed
                         self.showAlert(title: "Error", message: authenticationError?.localizedDescription ?? "Failed to authenticate")
                     }
                 }
