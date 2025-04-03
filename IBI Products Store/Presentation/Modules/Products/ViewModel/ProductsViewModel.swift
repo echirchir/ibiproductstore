@@ -12,14 +12,38 @@ import CoreData
 
 class ProductsViewModel {
     private var cancellables: Set<AnyCancellable> = []
-    
+    @Published var searchText: String = ""
     @Published var products: [LocalProduct] = []
+    @Published var filteredProducts: [LocalProduct] = []
     @Published var totalProducts: Int = 0
     private var skip = 0
     private let limit = 30
     private var isFetching = false
     var shouldRefresh: Bool = false
     var productId: Int? = 0
+    
+    var displayedProducts: [LocalProduct] {
+        searchText.isEmpty ? products : filteredProducts
+    }
+    
+    init(){
+        $searchText
+            .debounce(for: 0.3, scheduler: RunLoop.main)
+            .sink { [weak self] searchText in
+                self?.filterProducts(searchText: searchText)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func filterProducts(searchText: String) {
+        if searchText.isEmpty {
+            filteredProducts = products
+        } else {
+            filteredProducts = products.filter {
+                $0.title.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
     
     func fetchProducts(completion: @escaping((Bool) -> Void)) {
         guard !isFetching else { return }

@@ -7,8 +7,9 @@
 
 import UIKit
 import SDWebImage
+import Combine
 
-class ProductsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProductsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var filterImageView: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -16,6 +17,7 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
     private var viewModel: ProductsViewModel
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var isFetching = false
+    private var cancellables = Set<AnyCancellable>()
 
     init() {
         self.viewModel = ProductsViewModel()
@@ -36,13 +38,14 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         productsUiTable.dataSource = self
         productsUiTable.delegate = self
+        searchBar.delegate = self
         setupLoadingIndicator()
         fetchInitialProducts()
+        setupBindings()
     }
     
     private func reloadProductsIfNeeded() {
         if viewModel.shouldRefresh {
-            debugPrint("The favorited product is: refresh needed")
             viewModel.refreshProduct { complete in
                 DispatchQueue.main.async {
                     self.productsUiTable?.reloadData()
@@ -52,6 +55,30 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    private func setupBindings() {
+        viewModel.$products
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.productsUiTable.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$filteredProducts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.productsUiTable.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.searchText = searchText
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
     private func setupLoadingIndicator() {
         activityIndicator.center = view.center
         activityIndicator.hidesWhenStopped = true
@@ -59,13 +86,13 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.products.count
+        return viewModel.displayedProducts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! ProductTableViewCell
-        if(viewModel.products.count != 0){
-            let product = viewModel.products[indexPath.row]
+        if(viewModel.displayedProducts.count != 0){
+            let product = viewModel.displayedProducts[indexPath.row]
             
             cell.productImage.sd_setImage(with: URL(string: product.thumbnail), placeholderImage: UIImage(named: "car.2"))
 
@@ -79,7 +106,7 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedProduct = viewModel.products[indexPath.row]
+        let selectedProduct = viewModel.displayedProducts[indexPath.row]
         performSegue(withIdentifier: "showProductDetails", sender: selectedProduct)
     }
 
@@ -102,7 +129,7 @@ class ProductsViewController: UIViewController, UITableViewDataSource, UITableVi
         scrollView.layoutIfNeeded()
         
         if offsetY > contentHeight - (height + insetBottom) {
-            if viewModel.products.count < viewModel.totalProducts && !isFetching {
+            if viewModel.displayedProducts.count < viewModel.totalProducts && !isFetching {
                 isFetching = true
                 self.fetchMoreProducts()
             }
@@ -143,7 +170,12 @@ extension ProductsViewController: DetailsViewControllerDelegate {
     }
 
     func didDeleteProduct(withId productId: Int) {
-        viewModel.products.removeAll { $0.id == productId }
+        if viewModel.searchText.isEmpty {
+            viewModel.products.removeAll { $0.id == productId }
+        } else {
+            viewModel.filteredProducts.removeAll { $0.id == productId }
+            viewModel.products.removeAll { $0.id == productId }
+        }
         self.productsUiTable.reloadData()
     }
 }
